@@ -5,7 +5,7 @@ const Home = () => {
   const [Weather, setWeather] = useState();
   const [Forecast, setForecast] = useState();
   const [loading, setLoading] = useState(true);
- 
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((success) => {
       console.log(success);
@@ -42,25 +42,25 @@ const Home = () => {
   };
 
   return (
-    <div className="  p-8 md:p-2 flex flex-col items-center  ">
+    <main className="container mx-auto p-8 md:p-2 flex flex-col items-center">
       {!loading && (
         <>
           <h1 className="text-center text-3xl md:text-3xl mb-4 text-white">
             {Weather.name}
           </h1>
-          <div className="bg-gray-500 bg-opacity-30 p-4 rounded-md text-white text-center md:flex md:flex-col md:items-center md:space-y-4">
+          <section className="weather-details bg-gray-500 bg-opacity-30 p-4 rounded-md text-white text-center md:flex md:flex-col md:items-center md:space-y-4">
             <img
               src={`http://openweathermap.org/img/wn/${Weather.weather[0].icon}@2x.png`}
               alt="weather-icon"
               className="mx-auto"
             />
             <p className="text-xl md:text-2xl">
-              Temp: {Weather.main.temp.toFixed(0)}&#176;
+              Temperature: {Weather.main.temp.toFixed(0)}&#176;C
             </p>
             <p>{Weather.weather[0].description}</p>
-          </div>
+          </section>
 
-          <section className="bg-gray-500 bg-opacity-30 p-4 rounded-md text-white mt-4 md:flex md:flex-wrap md:justify-center">
+          <section className="forecast bg-gray-500 bg-opacity-30 p-4 rounded-md text-white mt-4 md:flex md:flex-wrap md:justify-center">
             <div className="overflow-x-auto whitespace-nowrap">
               <div className="">
                 {Forecast.list.map(
@@ -68,7 +68,7 @@ const Home = () => {
                     index < 6 && (
                       <div
                         key={forecasts.dt}
-                        className="w-1/2 md:w-1/3 lg:w-1/6 p-2 text-center inline-block items-center"
+                        className="forecast-item w-1/2 md:w-1/3 lg:w-1/6 p-2 text-center inline-block items-center"
                       >
                         <p className="text-sm text-white">
                           {getDayOfWeek(forecasts.dt)}
@@ -76,7 +76,10 @@ const Home = () => {
                         <p className="text-sm text-white">
                           {new Date(forecasts.dt * 1000).toLocaleTimeString(
                             [],
-                            { hour: "2-digit", minute: "2-digit" }
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            }
                           )}
                         </p>
                         <img
@@ -85,7 +88,7 @@ const Home = () => {
                           alt=""
                         />
                         <p className="text-lg">
-                       {forecasts.main.temp.toFixed(0)}&#176;
+                          {forecasts.main.temp.toFixed(0)}&#176;C
                         </p>
                       </div>
                     )
@@ -93,40 +96,36 @@ const Home = () => {
               </div>
             </div>
           </section>
+
           <section className="grid grid-cols-2 pt-5 gap-5">
-           
-            <div className="bg-gray-500 bg-opacity-30 p-4 rounded-md text-white text-center md:flex md:flex-col md:items-center md:space-y-4">
-          
-            <p className="text-xl md:text-2xl">
-              {Weather.wind.speed}  km/h
-            </p>
-            <p>Wind</p>
-          </div>
-            <div className="bg-gray-500 bg-opacity-30 p-4 rounded-md text-white text-center md:flex md:flex-col md:items-center md:space-y-4">
-           
-            <p className="text-xl md:text-2xl">
-              {Weather.main.humidity}%
-            </p>
-            <p>Humidity</p>
-          </div>
-            <div className="bg-gray-500 bg-opacity-30 p-4 rounded-md text-white text-center md:flex md:flex-col md:items-center md:space-y-4">
-           
-            <p className="text-xl md:text-2xl">
-            {formatTime(Weather.sys.sunrise)}
-            </p>
-            <p>sunrise</p>
-          </div>
-            <div className="bg-gray-500 bg-opacity-30 p-4 rounded-md text-white text-center md:flex md:flex-col md:items-center md:space-y-4">
-            <p className="text-xl md:text-2xl">
-              {formatTime(Weather.sys.sunset)}
-            </p>
-            <p>sunset</p>
-          </div>
-           
+            <div className="wind-info bg-gray-500 bg-opacity-30 p-4 rounded-md text-white text-center md:flex md:flex-col md:items-center md:space-y-4">
+              <p className="text-xl md:text-2xl">
+            {Weather.wind.speed} km/h
+              </p>
+              <p>Wind</p>
+            </div>
+            <div className="humidity-info bg-gray-500 bg-opacity-30 p-4 rounded-md text-white text-center md:flex md:flex-col md:items-center md:space-y-4">
+              <p className="text-xl md:text-2xl">
+                {Weather.main.humidity}%
+              </p>
+              <p>Humidity</p>
+            </div>
+            <div className="sunrise-info bg-gray-500 bg-opacity-30 p-4 rounded-md text-white text-center md:flex md:flex-col md:items-center md:space-y-4">
+              <p className="text-xl md:text-2xl">
+                 {formatTime(Weather.sys.sunrise)}
+              </p>
+              <p>Sunrise</p>
+            </div>
+            <div className="sunset-info bg-gray-500 bg-opacity-30 p-4 rounded-md text-white text-center md:flex md:flex-col md:items-center md:space-y-4">
+              <p className="text-xl md:text-2xl">
+               {formatTime(Weather.sys.sunset)}
+              </p>
+              <p>Sunset</p>
+            </div>
           </section>
         </>
       )}
-    </div>
+    </main>
   );
 };
 
