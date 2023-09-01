@@ -3,6 +3,7 @@ import './App.css';
 import { Outlet } from 'react-router-dom';
 import PWAPrompt from 'react-ios-pwa-prompt'
 import Header from './components/Header';
+import Footer from './components/Footer';
 function App() {
 
   return (
@@ -11,6 +12,7 @@ function App() {
     <main>
         <Outlet/>
     </main>
+    <Footer/>
     <PWAPrompt copyTitle="Føj til hjemmeskærm"/>
     </>
   );
